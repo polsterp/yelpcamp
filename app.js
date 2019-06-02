@@ -15,7 +15,7 @@ var commentRoutes    = require('./routes/comments'),
     campgroundRoutes = require('./routes/campgrounds')
     indexRoutes      = require('./routes/index');   
     
-var mongoDBAtlasPW = "process.env.MONGO_ATLAS_PW"
+var port =  process.env.PORT || 3000;
 
 //mongoose.connect('mongodb://localhost:27017/yelp_camp_2');
 mongoose.connect('mongodb+srv://polsterp:yPXWWZRtj5WVBQS@cluster0-vrbgs.mongodb.net/test?retryWrites=true&w=majority', {
@@ -75,6 +75,6 @@ app.use(indexRoutes);
 // ============================================
 // Server Start
 // ============================================
-app.listen(3000, function(){
+app.listen(port, function(){
     console.log("Server running on 3000");
 })
