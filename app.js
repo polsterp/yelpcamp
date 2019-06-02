@@ -13,9 +13,19 @@ var express     = require('express'),
 
 var commentRoutes    = require('./routes/comments'),
     campgroundRoutes = require('./routes/campgrounds')
-    indexRoutes      = require('./routes/index');    
+    indexRoutes      = require('./routes/index');   
+    
+var mongoDBAtlasPW = "process.env.MONGO_ATLAS_PW"
 
-mongoose.connect('mongodb://localhost:27017/yelp_camp_2');
+//mongoose.connect('mongodb://localhost:27017/yelp_camp_2');
+mongoose.connect('mongodb+srv://polsterp:yPXWWZRtj5WVBQS@cluster0-vrbgs.mongodb.net/test?retryWrites=true&w=majority', {
+    useNewUrlParser: true,
+    useCreateIndex: true
+}).then(() => {
+    console.log("Connected to DB!");
+}).catch(err => {
+    console.log("Error:", err.message);
+});
 app.use(bodyParser.urlencoded({extended: true}));
 // Define the default path for public like stylesheets
 app.use(express.static(__dirname + "/public"));
@@ -27,16 +37,16 @@ app.set("view engine", "ejs");
 app.use(flash());
 
 //Check if we are connected
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function(err) {
-    if(err){
-        console.log(err);
-    } else {
-        console.log("Connected to DB!");
-        //seedDB();
-    }
-});
+// var db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.once('open', function(err) {
+//     if(err){
+//         console.log(err);
+//     } else {
+//         console.log("Connected to DB!");
+//         //seedDB();
+//     }
+// });
 // Passport Config
 app.use(require("express-session")({
     secret: "Flora is cuter",
