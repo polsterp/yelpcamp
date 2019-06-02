@@ -1,0 +1,28 @@
+<% include ../partials/header %>
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Campgrounds</h1>
+            <p>Best campgrounds in Canada</p>
+            <p>
+                <a class="btn btn-primary btn-lg" href="/campgrounds/new">Add a new Campground</a>
+            </p>
+        </div>    
+    </header>
+
+<div class="row text-center" style="display: flex; flex-wrap:wrap">
+
+    <% campgrounds.forEach(function(campground){ %>
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img class="img-responsive" src="<%= campground.image %>" alt="bla">
+                <div class="caption">
+                        <h4><%= campground.name %></h4>
+                        <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary btn-md">Show  <i class="fas fa-eye"></i></a>
+                </div>
+            </div>            
+        </div>
+    <% }) %> 
+</div>
+
+<% include ../partials/footer %>
