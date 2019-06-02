@@ -17,15 +17,20 @@ var commentRoutes    = require('./routes/comments'),
     
 var port =  process.env.PORT || 3000;
 
-//mongoose.connect('mongodb://localhost:27017/yelp_camp_2');
-mongoose.connect('mongodb+srv://polsterp:yPXWWZRtj5WVBQS@cluster0-vrbgs.mongodb.net/test?retryWrites=true&w=majority', {
-    useNewUrlParser: true,
-    useCreateIndex: true
-}).then(() => {
+mongoose.connect(process.env.DATABASEURL)
+.then(() => {
     console.log("Connected to DB!");
 }).catch(err => {
     console.log("Error:", err.message);
 });
+// mongoose.connect('mongodb+srv://polsterp:yPXWWZRtj5WVBQS@cluster0-vrbgs.mongodb.net/test?retryWrites=true&w=majority', {
+//     useNewUrlParser: true,
+//     useCreateIndex: true
+// }).then(() => {
+//     console.log("Connected to DB!");
+// }).catch(err => {
+//     console.log("Error:", err.message);
+// });
 app.use(bodyParser.urlencoded({extended: true}));
 // Define the default path for public like stylesheets
 app.use(express.static(__dirname + "/public"));
