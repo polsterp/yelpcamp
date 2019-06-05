@@ -13,3 +13,43 @@
 .deleteButton {
     display: inline;
 }
+
+#mapShow {
+    width: 100%;
+    height: 300px;
+}
+
+#map {
+    width: 100%; 
+    height: 100%;
+    /* This is a weird one where the mapbox canvas only takes 50% of the available width so I added this */
+    text-align: justify;
+}
+
+
+/* #geocoder-container > div {
+    min-width:50%;
+    margin-left:25%;
+} */
+
+.loginCol {
+    height: 250px;
+}
+
+.loginCol .form-group {
+    width: 80%;
+    text-align: center;
+    margin: auto;
+    padding: 4px;
+}
+
+.form-group .invisible{
+    display: none;
+    height: 0;
+    width: 0;
+}
+
+.form-center {
+    width: 30%; 
+    margin: 30px auto;
+}

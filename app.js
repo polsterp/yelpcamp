@@ -18,7 +18,7 @@ var commentRoutes    = require('./routes/comments'),
 var port =  process.env.PORT || 3000;
 var url =   process.env.DATABASEURL || "mongodb://localhost:27017/yelp_camp_2"
 
-mongoose.connect(process.env.DATABASEURL)
+mongoose.connect(url)
 .then(() => {
     console.log("Connected to DB!");
 }).catch(err => {

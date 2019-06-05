@@ -2,27 +2,77 @@
 
 <div class="container text-center">
     <h1>Add a new Campground</h1>
-
-    <div class="row" style="width: 30%; margin: 30px auto">
-        <form action="/campgrounds" method="POST">
-            <div class="form-group">
-                <input class="form-control" type="text" name="name" placeholder="name"> 
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="number" name="price" placeholder="price" step="1.00" min="1.00" required> 
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="text" name="image" placeholder="image url">
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="text" name="description" placeholder="description">
-            </div>
-            <div class="form-group">
-                <input class="btn btn-success btn-md btn-block" type="submit">
-            </div>
-        </form>
-        <a href="/campgrounds">Back to Campgrounds</a>
+    <hr>
+    <div class="row">
+        <div class="col-md-6 loginCol">
+            <form action="/campgrounds" method="POST">
+                <div class="form-group">
+                    <input class="form-control" type="text" name="name" placeholder="name"> 
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="number" name="price" placeholder="price" step="1.00" min="1.00" required> 
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="image" placeholder="image url">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="description" placeholder="description">
+                </div>
+                <div class="form-group">
+                        <input id="location" class="form-control invisible" type="text" name="location" placeholder="location">
+                </div>
+                <div class="form-group">
+                        <input id="lng" class="form-control invisible" type="text" name="lng" placeholder="lng">
+                </div>
+                <div class="form-group">
+                        <input id="lat" class="form-control invisible" type="text" name="lat" placeholder="lat">
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-success btn-md btn-block" type="submit">
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6 loginCol">
+            <!-- Map to set location of Campground -->
+            <div id='map'></div>
+        </div>
     </div>
+    <hr>
+    <a href="/campgrounds">Back to Campgrounds</a>  
     <p></p>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoicG9sc3RlcnAiLCJhIjoiY2p3aDBtMWpiMWVqNTN5bzZuODdpb2wyaCJ9.FggWI4ja-YgsUD2cLk-RMA';
+        var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [-79.4512, 43.6568],
+        zoom: 13
+        });
+        var geocoder = new MapboxGeocoder({
+                accessToken: mapboxgl.accessToken,
+                marker: {
+                color: 'orange'
+                },
+                mapboxgl: mapboxgl
+        });
+        map.addControl(geocoder);
 
+        map.on('load', function() {
+
+            // Listen for the `geocoder.input` event that is triggered when a user
+            // makes a selection 
+            geocoder.on('result', function(ev) {
+                var styleSpec = ev.result;
+                //var styleSpecBox = document.getElementById('json-response');
+                var styleSpecText = JSON.stringify(styleSpec, null, 2);
+                var result = JSON.parse(styleSpecText);
+                console.log(result["center"][0]);
+                console.log(result["center"][1]);
+                console.log(result["text"]);
+                document.getElementById('location').value = result["text"];
+                document.getElementById('lng').value = result["center"][0];
+                document.getElementById('lat').value = result["center"][1];
+            });
+        });
+    </script>
 <% include ../partials/footer %>

@@ -4,10 +4,11 @@
         <div class="col-md-3">
             <p class="lead">YelpCamp</p>
             <div class="list-group">
-                <li class="list-group-item active">Info 1</li>
-                <li class="list-group-item">Info 1</li>
-                <li class="list-group-item">Info 1</li>
+                <li class="list-group-item active"><%= campground.location %></li>
+                <li class="list-group-item">Lng: <span id="lng"><%= campground.lng %></span></li>
+                <li class="list-group-item">Lat: <span id="lat"><%= campground.lat %></span></li>
             </div>
+            <div id='mapShow'></div>
         </div>
         <div class="col-md-9">
             <div class="thumbnail">
@@ -53,9 +54,23 @@
         </div>
     </div>
 </div>
-
-<% campground.comments.forEach(function(comment){ %>
-    
-<% }); %>
+<script src='https://unpkg.com/es6-promise@4.2.4/dist/es6-promise.auto.min.js'></script>
+<script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+<script>
+    var coordinates = [];
+    coordinates.push(Number(document.getElementById('lng').textContent));
+    coordinates.push(Number(document.getElementById('lat').textContent));
+    //console.log(coordinates);
+    mapboxgl.accessToken = 'pk.eyJ1IjoicG9sc3RlcnAiLCJhIjoiY2p3aDBtMWpiMWVqNTN5bzZuODdpb2wyaCJ9.FggWI4ja-YgsUD2cLk-RMA';
+    var map = new mapboxgl.Map({
+        container: 'mapShow',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: coordinates,
+        zoom: 13
+    });
+    var marker = new mapboxgl.Marker()
+            .setLngLat(coordinates)
+            .addTo(map);
+</script>
 
 <% include ../partials/footer %>
