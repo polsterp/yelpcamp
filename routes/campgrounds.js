@@ -25,8 +25,8 @@ router.get("/", function(req, res){
 // show specific campground
 router.get("/:id", function(req, res){
     Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
-        if(err){
-            console.log(err);
+        if(err || !foundCampground){
+            req.flash("error", "Campground not found!");
             res.redirect("/campgrounds");
         } else {
             res.render("campgrounds/show", {campground: foundCampground});
@@ -88,11 +88,28 @@ router.put("/:id", middleware.checkCampgroundOwnership, function(req, res){
 
 // Delete campground route
 router.delete("/:id", middleware.checkCampgroundOwnership, function(req, res){
-    Campground.findByIdAndRemove(req.params.id, function(err){
+    Campground.findById(req.params.id, function(err, foundCampground){
         if(err){
-            res.redirect("/campgrounds");
+            req.flash("error", "Error when finding campground to be removed.");
+            res.redirect("back");
         } else {
-            res.redirect("/campgrounds");
+            //console.log(foundCampground);
+            Comment.remove({_id: {$in: foundCampground.comments}}, function(err){
+                if(err){
+                    req.flash("error", "Error when removing comments from campground.");
+                    res.redirect("back");
+                } else {
+                    foundCampground.remove(function(err){
+                        if(err){
+                            req.flash("error", "Error when removing campground.");
+                            res.redirect("back");
+                        } else {
+                            req.flash("success", "Campground and associated comments successfully removed.");
+                             res.redirect("/campgrounds");
+                        }
+                    })
+                }
+            })
         }
     });
 });
