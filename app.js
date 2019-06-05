@@ -42,17 +42,7 @@ app.set("view engine", "ejs");
 // use connect-flash package
 app.use(flash());
 
-//Check if we are connected
-// var db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'connection error:'));
-// db.once('open', function(err) {
-//     if(err){
-//         console.log(err);
-//     } else {
-//         console.log("Connected to DB!");
-//         //seedDB();
-//     }
-// });
+app.locals.moment = require('moment');
 // Passport Config
 app.use(require("express-session")({
     secret: "Flora is cuter",
