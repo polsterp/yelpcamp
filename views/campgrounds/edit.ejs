@@ -5,7 +5,7 @@
     <hr>
     <div class="row">
         <div class="col-md-6 loginCol">
-            <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST">
+            <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <input class="form-control" type="text" name="camp[name]" value="<%= campground.name%>"> 
                 </div>
@@ -13,10 +13,13 @@
                     <input class="form-control" type="text" name="camp[price]" value="<%= campground.price %>" min="1.00" step="1.00" required> 
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="camp[image]" value="<%= campground.image%>">
-                </div>
-                <div class="form-group">
                     <input class="form-control" type="text" name="camp[description]" value="<%= campground.description%>">
+                </div>
+                <div class="form-group ">
+                    <div class="input-group">
+                        <label title="Upload a different image - old image will be deleted" for="imageUpload" class="btn btn-info btn-md input-group-addon"><i class="fas fa-cloud-upload-alt"></i></label>
+                        <input id="imageUpload" class="form-control text-left" type="file" name="image" accept="image/*">
+                    </div>
                 </div>
                 <div class="form-group">
                         <input id="location" class="form-control invisible" type="text" name="camp[location]" value="<%= campground.location%>">

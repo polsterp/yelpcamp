@@ -5,27 +5,30 @@
     <hr>
     <div class="row">
         <div class="col-md-6 loginCol">
-            <form action="/campgrounds" method="POST">
+            <form action="/campgrounds" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="name" placeholder="name"> 
+                    <input class="form-control" type="text" name="camp[name]" placeholder="name" required> 
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="number" name="price" placeholder="price" step="1.00" min="1.00" required> 
+                    <input class="form-control" type="number" name="camp[price]" placeholder="price" step="1.00" min="1.00" required> 
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="image" placeholder="image url">
+                    <input class="form-control" type="text" name="camp[description]" placeholder="description" required>
+                </div>
+                <div class="form-group ">
+                    <div class="input-group">
+                        <label title="Upload an image" for="imageUpload" class="btn btn-info btn-md input-group-addon"><i class="fas fa-cloud-upload-alt"></i></label>
+                        <input id="imageUpload" class="form-control text-left" type="file" name="image" accept="image/*" required>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="description" placeholder="description">
+                    <input id="location" class="form-control invisible" type="text" name="camp[location]" placeholder="location">
                 </div>
                 <div class="form-group">
-                        <input id="location" class="form-control invisible" type="text" name="location" placeholder="location">
+                    <input id="lng" class="form-control invisible" type="text" name="camp[lng]" placeholder="lng">
                 </div>
                 <div class="form-group">
-                        <input id="lng" class="form-control invisible" type="text" name="lng" placeholder="lng">
-                </div>
-                <div class="form-group">
-                        <input id="lat" class="form-control invisible" type="text" name="lat" placeholder="lat">
+                    <input id="lat" class="form-control invisible" type="text" name="camp[lat]" placeholder="lat">
                 </div>
                 <div class="form-group">
                     <input class="btn btn-success btn-md btn-block" type="submit">
